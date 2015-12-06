@@ -1,0 +1,25 @@
+{
+  "name": "luffa",
+  "version": "0.0.0",
+  "description": "A Test Framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "luffa"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phodal/luffa.git"
+  },
+  "keywords": [
+    "Test",
+    "Framework",
+    "Test",
+    "Helper"
+  ],
+  "author": "Phodal Huang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/phodal/luffa/issues"
+  },
+  "homepage": "https://github.com/phodal/luffa#readme"
+}
