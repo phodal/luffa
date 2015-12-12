@@ -6,9 +6,21 @@ module.exports = function (grunt) {
         singleRun: true
       },
       auto: {}
+    },
+    browserify: {
+      client: {
+        files: {
+          'vendor/html2hscript.js': ['node_modules/html2hscript/index.js']
+        }
+      }
     }
   });
 
   require('load-grunt-tasks')(grunt);
+
+  //browserify
+  var shell = require('shelljs');
+  shell.exec('browserify -r html2hscript -o vendor/html2hscript.js');
+
   grunt.registerTask('default', ['karma']);
 };

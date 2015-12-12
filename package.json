@@ -24,10 +24,13 @@
   "homepage": "https://github.com/phodal/luffa#readme",
   "devDependencies": {
     "grunt": "^0.4.1",
+    "grunt-browserify": "^4.0.1",
     "grunt-karma": "*",
-    "load-grunt-tasks": "^3.2.0",
+    "html2hscript": "^1.2.1",
+    "karma-chrome-launcher": "*",
     "karma-jasmine": "*",
     "karma-phantomjs-launcher": "*",
-    "karma-chrome-launcher": "*"
+    "load-grunt-tasks": "^3.2.0",
+    "shelljs": "^0.5.3"
   }
 }
