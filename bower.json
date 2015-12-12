@@ -1,0 +1,28 @@
+{
+  "name": "luffa",
+  "description": "A Test Framework",
+  "main": "index.js",
+  "authors": [
+    "Phodal Huang"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "Test",
+    "Framework",
+    "Test",
+    "Helper"
+  ],
+  "homepage": "https://github.com/phodal/luffa",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jasmine-core": "jasmine#~2.4.1",
+    "jasmine-jquery": "~2.1.1"
+  }
+}
