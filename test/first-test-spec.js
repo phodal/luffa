@@ -8,4 +8,4 @@ describe("A suite", function () {
       expect($(virtualDom.create(eval(hscript))).html()).toBe($(fixtures).html());
     });
   });
-})
+});

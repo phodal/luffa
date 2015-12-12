@@ -12,22 +12,8 @@
   <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="bower_components/jasmine-jquery/lib/jasmine-jquery.js"></script>
   <script type="text/javascript" src="bower_components/virtual-dom/dist/virtual-dom.js"></script>
-  <script type="text/javascript" src="vendor/html2hscript.js"></script>
-  <script type="text/javascript">
-    (function () {
-      describe("A suite", function () {
-        it("contains spec with an expectation", function () {
-          var parser = require('html2hscript');
-          var h = virtualDom.h;
-          var fixtures = '<div><div><h1 foo="beep">Hello World</h1></div></div>';
-          setFixtures(fixtures);
-          parser(fixtures, function (err, hscript) {
-            expect($(virtualDom.create(eval(hscript))).html()).toBe($(fixtures).html());
-          });
-        });
-      });
-    })();
-  </script>
+  <script type="text/javascript" src="vendor/html2hscript.js"></script> <!-- include spec files here... -->
+  <script type="text/javascript" src="test/first-test-spec.js"></script>
 </head>
 <body>
 </body>
