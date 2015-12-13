@@ -8,20 +8,10 @@ describe("A suite", function () {
     });
   });
   it("should different", function () {
-    var parser = require('html2hscript');
-    var vDOM = virtualDom;
-
     var originDOM = '<div id="test"><div id="example"></div><h1 class="hello">Hello World</h1></div></div>';
     var changeDOM = '<div id="test"><div id="example"></div><h1 class="world">Hello World</h1></div></div>';
 
-    var result, expected;
-    parser(originDOM, function (err, hscript) {
-      result = eval(hscript);
-    });
-    parser(changeDOM, function (err, hscript) {
-      expected = eval(hscript);
-    });
-    var patches = diff(result, expected);
+    var patches = luffa.diff(originDOM, changeDOM);
     expect(patches[2].patch.className).toBe("world");
   });
 });
