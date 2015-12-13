@@ -3,14 +3,6 @@
 > A Test Framework Helper for Fun
 
 
-##TODO
-
- - diff DOM to generate Test
- - plugins support
- - basic test support (Jasmine)
- - function test support (Cucumber or ...)
- - Chrome Plugin
- 
 ##License##
 
 © 2015 [Phodal Huang](http://www.phodal.com). This code is distributed under the MIT license. See `LICENSE` in this directory.
