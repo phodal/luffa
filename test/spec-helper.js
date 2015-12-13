@@ -1,22 +1,8 @@
-var isObject = require("is-object");
 var h = virtualDom.h;
 var diff = virtualDom.diff;
 var patch = virtualDom.patch;
 
-function getPrototype(value) {
-  if (Object.getPrototypeOf) {
-    return Object.getPrototypeOf(value)
-  } else if (value.__proto__) {
-    return value.__proto__
-  } else if (value.constructor) {
-    return value.constructor.prototype
-  }
-}
-function isHook(hook) {
-  return hook &&
-    (typeof hook.hook === "function" && !hook.hasOwnProperty("hook") ||
-    typeof hook.unhook === "function" && !hook.hasOwnProperty("unhook"))
-}
+isObject = luffa.isObject;
 
 function diffProps(a, b) {
   var diff;
