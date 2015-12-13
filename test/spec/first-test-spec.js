@@ -7,7 +7,15 @@ describe("A suite", function () {
       expect($(virtualDom.create(eval(hscript))).html()).toBe($(fixtures).html());
     });
   });
-  it("should different", function () {
+  it("should different id", function () {
+    var originDOM = '<div id="test"><div id="example1"></div><h1 class="world">Hello World</h1></div></div>';
+    var changeDOM = '<div id="test"><div id="example2"></div><h1 class="world">Hello World</h1></div></div>';
+
+    var patches = luffa.diff(originDOM, changeDOM);
+
+    expect(patches[1].patch.id).toBe("example2");
+  });
+  it("should different class", function () {
     var originDOM = '<div id="test"><div id="example"></div><h1 class="hello">Hello World</h1></div></div>';
     var changeDOM = '<div id="test"><div id="example"></div><h1 class="world">Hello World</h1></div></div>';
 
