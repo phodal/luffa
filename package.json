@@ -4,7 +4,7 @@
   "description": "A Test Framework",
   "main": "index.js",
   "scripts": {
-    "test": "luffa"
+    "test": "grunt"
   },
   "repository": {
     "type": "git",
