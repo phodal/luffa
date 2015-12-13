@@ -25,6 +25,17 @@ describe("VirtualDOM Test", function () {
     expect(patches[1].patch.id).toBe("example2");
     expect(patches[2].patch.className).toBe("world");
   });
+  it("should different add dom patches", function () {
+    var originDOM = '<div id="test"><div id="example"><h1 class="hello">Hello World</h1></div></div>';
+    var changeDOM = '<div id="test"><div id="example2"><h1 class="world"><span>Hello World</span></h1></div></div>';
+
+    var patches = luffa.diff(originDOM, changeDOM);
+
+    expect(patchCount(patches)).toBe(3);
+    expect(patches[1].patch.id).toBe("example2");
+    expect(patches[2].patch.className).toBe("world");
+    expect(patches[3].patch.tagName).toBe("SPAN");
+  });
 });
 
 describe("Fixtures Test", function () {
