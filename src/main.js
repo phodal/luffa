@@ -25,14 +25,15 @@ luffa.diff = function (originDOM, changeDOM) {
 luffa.getDiffDom = function (patches) {
   var TYPE = ['NONE', 'VTEXT', 'VNODE', 'WIDGET', 'PROPS', 'ORDER', 'INSERT', 'REMOVE', 'THUNK'];
   var patchesKeys = Object.keys(patches);
-  var results = [], index = 0;
-  for (var patchKey in patchesKeys) {
-    if (patchKey === 'a') {
-      return;
+  var results = [];
+  for (var index in patchesKeys) {
+    var key = patchesKeys[index];
+    if (key === 'a') {
+      break;
     }
     var result = {};
-    result.type = TYPE[patches[index].type];
-    result.html = render(patches[index].patch);
+    result.type = TYPE[patches[key].type];
+    result.html = render(patches[key].patch);
     results.push(result);
   }
   return results;
