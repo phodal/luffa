@@ -1,4 +1,4 @@
-# luffa
+# luffa [![Build Status](https://travis-ci.org/phodal/luffa.svg)](https://travis-ci.org/phodal/luffa)
 
 > A Test Framework Helper for Fun
 
