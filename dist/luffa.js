@@ -43,17 +43,6 @@ luffa.diff = function (originDOM, changeDOM) {
 };
 
 luffa.getDiffDom = function (patches) {
-  //var PATCH_TYPE = {
-  //  NONE: 0,
-  //  VTEXT: 1,
-  //  VNODE: 2,
-  //  WIDGET: 3,
-  //  PROPS: 4,
-  //  ORDER: 5,
-  //  INSERT: 6,
-  //  REMOVE: 7,
-  //  THUNK: 8
-  //};
   var TYPE = ['NONE', 'VTEXT', 'VNODE', 'WIDGET', 'PROPS', 'ORDER', 'INSERT', 'REMOVE', 'THUNK'];
   var patchesKeys = Object.keys(patches);
   var results = [], index = 0;

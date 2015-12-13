@@ -49,13 +49,24 @@ module.exports = function (config) {
       "PhantomJS"
       //"PhantomJS", "Chrome"
     ],
-
+    reporters: ['progress', 'coverage'],
+    preprocessors: { 'dist/*.js': ['coverage'] },
     // Which plugins to enable
     plugins: [
       "karma-phantomjs-launcher",
       //"karma-chrome-launcher",
+      "karma-coverage",
+      "karma-html-reporter",
       "karma-jasmine"
     ],
+    coverageReporter: {
+      dir: 'reports/coverage',
+      reporters: [
+        // reporters not supporting the `file` property
+        { type: 'html', subdir: 'html' },
+        { type: 'json', subdir: 'json' }
+      ]
+    },
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit

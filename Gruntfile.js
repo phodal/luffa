@@ -52,6 +52,17 @@ module.exports = function (grunt) {
     watch: {
       files: ['src/*.js'],
       tasks: ['concat']
+    },
+    coverage: {
+      default: {
+        options: {
+          thresholds: {
+            'statements': 75
+          },
+          dir: 'coverage/json/',
+          root: 'reports'
+        }
+      }
     }
   });
 
@@ -64,5 +75,5 @@ module.exports = function (grunt) {
   });
   require('load-grunt-tasks')(grunt);
 
-  grunt.registerTask('default', ['vendor', 'concat', 'replace', 'karma']);
+  grunt.registerTask('default', ['vendor', 'concat', 'replace', 'karma', 'coverage']);
 };

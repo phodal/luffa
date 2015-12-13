@@ -27,14 +27,18 @@
     "grunt-browserify": "^4.0.1",
     "grunt-contrib-concat": "^0.5.1",
     "grunt-contrib-watch": "^0.6.1",
-    "karma": "^0.13.15",
     "grunt-karma": "*",
     "grunt-replace": "^0.11.0",
     "html2hscript": "^1.2.1",
+    "karma": "^0.13.15",
     "karma-chrome-launcher": "*",
+    "karma-coverage": "^0.5.3",
+    "grunt-istanbul-coverage": "^0.1.1",
+    "karma-html-reporter": "^0.2.7",
     "karma-jasmine": "*",
     "karma-phantomjs-launcher": "*",
     "load-grunt-tasks": "^3.2.0",
+    "phantomjs": "^1.9.19",
     "shelljs": "^0.5.3"
   }
 }
