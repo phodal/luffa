@@ -21,6 +21,7 @@ module.exports = function (grunt) {
   //browserify
   var shell = require('shelljs');
   shell.exec('browserify -r html2hscript -o vendor/html2hscript.js');
+  shell.exec('browserify -r is-object -o vendor/is-object.js');
 
   grunt.registerTask('default', ['karma']);
 };

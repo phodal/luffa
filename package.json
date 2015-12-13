@@ -27,6 +27,7 @@
     "grunt-browserify": "^4.0.1",
     "grunt-karma": "*",
     "html2hscript": "^1.2.1",
+    "is-object": "^1.0.1",
     "karma-chrome-launcher": "*",
     "karma-jasmine": "*",
     "karma-phantomjs-launcher": "*",
