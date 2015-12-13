@@ -52,6 +52,5 @@ if (typeof noGlobal === strundefined) {
   window.luffa = luffa;
 }
 return luffa;
-}))
-;
+}));
 
