@@ -12,6 +12,7 @@ describe("A suite", function () {
     var changeDOM = '<div id="test"><div id="example"></div><h1 class="world">Hello World</h1></div></div>';
 
     var patches = luffa.diff(originDOM, changeDOM);
+
     expect(patches[2].patch.className).toBe("world");
   });
 });

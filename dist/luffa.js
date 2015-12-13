@@ -34,11 +34,11 @@ luffa.diff = function (originDOM, changeDOM) {
   var result, expected;
   parser(originDOM, function (err, hscript) {
     result = eval(hscript);
-    parser(changeDOM, function (err, hscript) {
-      expected = eval(hscript);
-      return diff(result, expected);
-    });
   });
+  parser(changeDOM, function (err, hscript) {
+    expected = eval(hscript);
+  });
+  return diff(result, expected);
 };
 
 
