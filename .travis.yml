@@ -6,5 +6,5 @@ node_js:
   - '0.12'
 notifications:
   email: false
-before_install: npm install -g bower;
+before_install: npm install -g bower;npm install -g grunt-cli;
 install: bower install; npm install
