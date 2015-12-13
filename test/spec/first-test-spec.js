@@ -109,8 +109,6 @@ describe("Patches Test", function () {
     parser($("#test").html(), function (err, hscript) {
       tmpDIV.appendChild(virtualDom.create(eval(hscript)));
       var patches = luffa.diff($(fixtures).html(), $(newDIV).html());
-
-      console.log(patches);
       expect(luffa.getDiffDom(patches)[0].type).toBe('PROPS');
     });
   });

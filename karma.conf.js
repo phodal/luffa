@@ -25,7 +25,6 @@ module.exports = function (config) {
       {pattern: 'bower_components/jasmine-jquery/lib/jasmine-jquery.js', included: true, watched: false},
       {pattern: 'bower_components/virtual-dom/dist/virtual-dom.js', included: true, watched: false},
       {pattern: 'vendor/html2hscript.js', included: true, watched: false},
-      {pattern: 'vendor/is-object.js', included: true, watched: false},
       'dist/luffa.js',
       'test/*.js',
       'test/**/*-spec.js'
