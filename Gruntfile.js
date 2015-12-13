@@ -55,12 +55,14 @@ module.exports = function (grunt) {
     }
   });
 
+  grunt.task.registerTask('vendor', 'A sample task that logs stuff.', function() {
+    //browserify
+    var shell = require('shelljs');
+    shell.mkdir('vendor');
+    shell.exec('browserify -r html2hscript -o vendor/html2hscript.js');
+
+  });
   require('load-grunt-tasks')(grunt);
 
-  //browserify
-  var shell = require('shelljs');
-  shell.exec('browserify -r html2hscript -o vendor/html2hscript.js');
-  shell.exec('browserify -r is-object -o vendor/is-object.js');
-
-  grunt.registerTask('default', ['concat', 'replace', 'karma']);
+  grunt.registerTask('default', ['vendor', 'concat', 'replace', 'karma']);
 };
