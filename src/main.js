@@ -32,6 +32,15 @@ luffa.handleProps = function (patch) {
 luffa.handleInsert = function (html) {
   return $(html).prop("outerHTML");
 };
+
+luffa.handleRemove = function (html) {
+  return null;
+};
+
+luffa.handleVText = function (patch) {
+  return patch.patch.text;
+};
+
 luffa.getDiffDom = function (patches) {
   var TYPE = ['NONE', 'VTEXT', 'VNODE', 'WIDGET', 'PROPS', 'ORDER', 'INSERT', 'REMOVE', 'THUNK'];
   var patchesKeys = Object.keys(patches);
@@ -49,6 +58,12 @@ luffa.getDiffDom = function (patches) {
     }
     if (result.type === 'INSERT') {
       result.prop = luffa.handleInsert(result.html);
+    }
+    if (result.type === 'REMOVE') {
+      result.prop = luffa.handleRemove(result.html);
+    }
+    if (result.type === 'VTEXT') {
+      result.prop = luffa.handleVText(patches[key]);
     }
     results.push(result);
   }
