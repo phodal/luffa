@@ -28,7 +28,6 @@ var h = virtualDom.h;
 var diff = virtualDom.diff;
 var patch = virtualDom.patch;
 var render = virtualDom.create;
-
 var parser = require('html2hscript');
 
 luffa.diff = function (originDOM, changeDOM) {
@@ -46,7 +45,11 @@ luffa.diff = function (originDOM, changeDOM) {
 };
 
 luffa.handleProps = function (patch) {
-  return patch.patch.className;
+  if(patch.patch.className){
+    return patch.patch.className;
+  } else if (patch.patch.id){
+    return patch.patch.id;
+  }
 };
 
 luffa.handleInsert = function (html) {
