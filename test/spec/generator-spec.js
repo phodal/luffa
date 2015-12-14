@@ -11,9 +11,10 @@ describe("Generator Change", function () {
     parser($("#test").html(), function (err, hscript) {
       tmpDIV.appendChild(virtualDom.create(eval(hscript)));
       var patches = luffa.diff($(fixtures).html(), $(tmpDIV).html(), eval(hscript));
-      var className = patches[1].patch.className;
+      var className = luffa.getDiffDom(patches)[0].prop;
       console.log('%c ' + $(fixtures).html(), 'background: #222; color: #bada55');
-      console.log('%c ' + $(tmpDIV).html().replace(className, '%c' + className + '%c '), 'background: #222; color: #bada55', 'color: red', 'background: #222; color: #bada55');
+      var result = $(tmpDIV).html().replace('"' + className + '"', '%c' + className + '%c');
+      console.log('%c ' + result, 'background: #222; color: #bada55', 'color: red', 'background: #222; color: #bada55');
       expect(true).toBe(true);
     });
   });

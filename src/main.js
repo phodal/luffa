@@ -26,12 +26,11 @@ luffa.diff = function (originDOM, changeDOM) {
 };
 
 luffa.handleProps = function (patch) {
-  console.log(patch.patch);
-  var result = "";
-  if (patch.className) {
-    result = 'class="' + className + '"'
+  var prop = "";
+  if (patch.patch && patch.patch.className) {
+    prop = patch.patch.className;
   }
-  return result;
+  return prop;
 };
 
 luffa.getDiffDom = function (patches) {
@@ -47,7 +46,7 @@ luffa.getDiffDom = function (patches) {
     result.type = TYPE[patches[key].type];
     result.html = render(patches[key].patch);
     if (result.type === 'PROPS') {
-      result.html = luffa.handleProps(patches[key]);
+      result.prop = luffa.handleProps(patches[key]);
     }
     results.push(result);
   }
