@@ -72,6 +72,9 @@ function createResult(patches, key) {
   if (result.type === 'INSERT') {
     result.prop = luffa.handleInsert(result.html);
   }
+  if (result.type === 'VNODE') {
+    result.prop = luffa.handleInsert(result.html);
+  }
   if (result.type === 'REMOVE') {
     result.prop = luffa.handleRemove(result.html);
   }
@@ -82,20 +85,25 @@ function createResult(patches, key) {
   return result;
 }
 
+function getSubResults(patchIndex, patches) {
+  var subPatchesKeys = Object.keys(patches[patchIndex]);
+  var subResults = [];
+  for (var subIndex in subPatchesKeys) {
+    subResults.push(createResult(patches[patchIndex], subIndex))
+  }
+  return subResults
+}
+
 luffa.getDiffDom = function (patches) {
   var patchesKeys = Object.keys(patches);
   var results = [];
   for (var index in patchesKeys) {
     var patchIndex = patchesKeys[index];
     if (patchIndex !== 'a') {
-      var subResult = [];
       var result;
+
       if (luffa.isArray(patches[patchIndex])) {
-        var subKeys = Object.keys(patchIndex);
-        for (var subKey in subKeys) {
-          subResult.push(createResult(patches[patchIndex], subKey))
-        }
-        result = subResult;
+        result = getSubResults(patchIndex, patches);
       } else {
         result = createResult(patches, patchIndex);
       }
