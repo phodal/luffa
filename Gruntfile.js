@@ -51,7 +51,7 @@ module.exports = function (grunt) {
     },
     watch: {
       files: ['src/*.js'],
-      tasks: ['concat']
+      tasks: ['concat', 'replace']
     },
     coverage: {
       default: {

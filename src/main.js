@@ -25,6 +25,15 @@ luffa.diff = function (originDOM, changeDOM) {
   return diff(result, expected);
 };
 
+luffa.handleProps = function (patch) {
+  console.log(patch.patch);
+  var result = "";
+  if (patch.className) {
+    result = 'class="' + className + '"'
+  }
+  return result;
+};
+
 luffa.getDiffDom = function (patches) {
   var TYPE = ['NONE', 'VTEXT', 'VNODE', 'WIDGET', 'PROPS', 'ORDER', 'INSERT', 'REMOVE', 'THUNK'];
   var patchesKeys = Object.keys(patches);
@@ -37,6 +46,9 @@ luffa.getDiffDom = function (patches) {
     var result = {};
     result.type = TYPE[patches[key].type];
     result.html = render(patches[key].patch);
+    if (result.type === 'PROPS') {
+      result.html = luffa.handleProps(patches[key]);
+    }
     results.push(result);
   }
   return results;
