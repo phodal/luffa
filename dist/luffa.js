@@ -86,23 +86,25 @@ luffa.getDiffDom = function (patches) {
   var patchesKeys = Object.keys(patches);
   var results = [];
   for (var index in patchesKeys) {
-    var patch = patchesKeys[index];
-    var subResult = {};
-    // is one node have many diff
-    if (luffa.isArray(patch)) {
-      var subKeys = Object.keys(patch);
-      for(var subKey in subKeys){
-        subResult.push(createResult(patches[patch], subKey))
+    var patchIndex = patchesKeys[index];
+    if (patchIndex !== 'a') {
+      var subResult = [];
+      var result;
+      if (luffa.isArray(patches[patchIndex])) {
+        var subKeys = Object.keys(patchIndex);
+        for (var subKey in subKeys) {
+          subResult.push(createResult(patches[patchIndex], subKey))
+        }
+        result = subResult;
+      } else {
+        result = createResult(patches, patchIndex);
       }
-      results.push(subResult);
+      results.push(result);
     }
-    if (patch === 'a') {
-      break;
-    }
-    results.push(createResult(patches, patch));
   }
   return results;
-};
+}
+;
 
 
 luffa.isObject = function (x) {
