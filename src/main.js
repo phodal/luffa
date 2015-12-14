@@ -41,31 +41,45 @@ luffa.handleVText = function (patch) {
   return patch.patch.text;
 };
 
-luffa.getDiffDom = function (patches) {
+function createResult(patches, key) {
+  var result = {};
   var TYPE = ['NONE', 'VTEXT', 'VNODE', 'WIDGET', 'PROPS', 'ORDER', 'INSERT', 'REMOVE', 'THUNK'];
+  result.type = TYPE[patches[key].type];
+  result.html = render(patches[key].patch);
+  if (result.type === 'PROPS') {
+    result.prop = luffa.handleProps(patches[key]);
+  }
+  if (result.type === 'INSERT') {
+    result.prop = luffa.handleInsert(result.html);
+  }
+  if (result.type === 'REMOVE') {
+    result.prop = luffa.handleRemove(result.html);
+  }
+  if (result.type === 'VTEXT') {
+    result.prop = luffa.handleVText(patches[key]);
+  }
+
+  return result;
+}
+
+luffa.getDiffDom = function (patches) {
   var patchesKeys = Object.keys(patches);
   var results = [];
   for (var index in patchesKeys) {
-    var key = patchesKeys[index];
-    if (key === 'a') {
+    var patch = patchesKeys[index];
+    var subResult = {};
+    // is one node have many diff
+    if (luffa.isArray(patch)) {
+      var subKeys = Object.keys(patch);
+      for(var subKey in subKeys){
+        subResult.push(createResult(patches[patch], subKey))
+      }
+      results.push(subResult);
+    }
+    if (patch === 'a') {
       break;
     }
-    var result = {};
-    result.type = TYPE[patches[key].type];
-    result.html = render(patches[key].patch);
-    if (result.type === 'PROPS') {
-      result.prop = luffa.handleProps(patches[key]);
-    }
-    if (result.type === 'INSERT') {
-      result.prop = luffa.handleInsert(result.html);
-    }
-    if (result.type === 'REMOVE') {
-      result.prop = luffa.handleRemove(result.html);
-    }
-    if (result.type === 'VTEXT') {
-      result.prop = luffa.handleVText(patches[key]);
-    }
-    results.push(result);
+    results.push(createResult(patches, patch));
   }
   return results;
 };

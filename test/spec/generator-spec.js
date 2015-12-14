@@ -72,4 +72,17 @@ describe("Generator complicate Change", function () {
       expect(html).toBe('world');
     });
   });
+  //it("should return multi change", function () {
+  //  fixtures = '<div id="test"><div id="example"><h1 class="hello">Hello World</h1></div><div id="example2">hello</div></div>';
+  //  var change = '<div id="example"><h1 class="world">Hello World</h1><h2 class="hello">Hello World</h2><div id="example2">world</div></div>';
+  //  parser(change, function (err, hscript) {
+  //    var changedDOM = virtualDom.create(eval(hscript)).outerHTML;
+  //    var patches = luffa.diff($(fixtures).html(), changedDOM);
+  //    var html = luffa.getDiffDom(patches)[0].prop;
+  //    console.log(patches, luffa.getDiffDom(patches));
+  //    expect(html).toBe('<h2 class="hello">Hello World</h2>');
+  //    var html = luffa.getDiffDom(patches)[1].prop;
+  //    expect(html).toBe('world');
+  //  });
+  //});
 });
