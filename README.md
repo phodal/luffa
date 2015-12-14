@@ -1,6 +1,11 @@
-# luffa [![Build Status](https://travis-ci.org/phodal/luffa.svg)](https://travis-ci.org/phodal/luffa)
+# Luffa [![Build Status](https://travis-ci.org/phodal/luffa.svg)](https://travis-ci.org/phodal/luffa)
 
 > A Test Framework Helper for Fun
+
+###Goals
+
+1. HighLight DOM Change
+2. Generator Test
 
 
 ##License##
