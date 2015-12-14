@@ -53,6 +53,9 @@ luffa.handleProps = function (patch) {
   return prop;
 };
 
+luffa.handleInsert = function (html) {
+  return $(html).prop("outerHTML");
+};
 luffa.getDiffDom = function (patches) {
   var TYPE = ['NONE', 'VTEXT', 'VNODE', 'WIDGET', 'PROPS', 'ORDER', 'INSERT', 'REMOVE', 'THUNK'];
   var patchesKeys = Object.keys(patches);
@@ -67,6 +70,9 @@ luffa.getDiffDom = function (patches) {
     result.html = render(patches[key].patch);
     if (result.type === 'PROPS') {
       result.prop = luffa.handleProps(patches[key]);
+    }
+    if (result.type === 'INSERT') {
+      result.prop = luffa.handleInsert(result.html);
     }
     results.push(result);
   }

@@ -15,5 +15,15 @@ describe("Generator Change", function () {
       expect(className).toBe("hello world");
     });
   });
+  it("should return append class", function () {
+    var span = '<span>fsafaf</span>';
+    $(".hello").append(span);
+    parser($("#test").html(), function (err, hscript) {
+      var changedDOM = virtualDom.create(eval(hscript)).outerHTML;
+      var patches = luffa.diff($(fixtures).html(), changedDOM);
+      var html = luffa.getDiffDom(patches)[0].prop;
+      expect(html).toBe(span);
+    });
+  });
 });
 
