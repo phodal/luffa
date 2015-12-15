@@ -45,9 +45,9 @@ luffa.diff = function (originDOM, changeDOM) {
 };
 
 luffa.handleProps = function (patch) {
-  if(patch.patch.className){
+  if (patch.patch.className) {
     return patch.patch.className;
-  } else if (patch.patch.id){
+  } else if (patch.patch.id) {
     return patch.patch.id;
   }
 };
@@ -69,20 +69,24 @@ function createResult(patches, key) {
   var TYPE = ['NONE', 'VTEXT', 'VNODE', 'WIDGET', 'PROPS', 'ORDER', 'INSERT', 'REMOVE', 'THUNK'];
   result.type = TYPE[patches[key].type];
   result.html = render(patches[key].patch);
-  if (result.type === 'PROPS') {
-    result.prop = luffa.handleProps(patches[key]);
-  }
-  if (result.type === 'INSERT') {
-    result.prop = luffa.handleInsert(result.html);
-  }
-  if (result.type === 'VNODE') {
-    result.prop = luffa.handleInsert(result.html);
-  }
-  if (result.type === 'REMOVE') {
-    result.prop = luffa.handleRemove(result.html);
-  }
-  if (result.type === 'VTEXT') {
-    result.prop = luffa.handleVText(patches[key]);
+  switch (result.type) {
+    case 'PROPS':
+      result.prop = luffa.handleProps(patches[key]);
+      break;
+    case 'INSERT':
+      result.prop = luffa.handleInsert(result.html);
+      break;
+    case 'VNODE':
+      result.prop = luffa.handleInsert(result.html);
+      break;
+    case 'REMOVE':
+      result.prop = luffa.handleRemove(result.html);
+      break;
+    case 'VTEXT':
+      result.prop = luffa.handleVText(patches[key]);
+      break;
+    default:
+      result.prop = null;
   }
 
   return result;
