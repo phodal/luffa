@@ -2,7 +2,7 @@
 
 > A Test Framework Helper for Fun
 
-###Goals
+###GOAL
 
 1. HighLight DOM Change
 2. Generator Test
