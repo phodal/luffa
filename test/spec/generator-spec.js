@@ -100,3 +100,28 @@ describe("Generator complicate Change", function () {
     });
   });
 });
+
+describe("Apply Patches", function () {
+  var parser, fixtures;
+  beforeEach(function () {
+    parser = require('html2hscript');
+    fixtures = '<div id="test"><div id="example"><h1 class="hello">Hello World</h1></div></div>';
+    setFixtures(fixtures);
+  });
+  it("should return multi change", function () {
+    var leftNode = new virtualDom.VNode("div");
+    var rightNode = new virtualDom.VNode("div", {}, [new virtualDom.VNode("div")]);
+    
+    function createElementCustom(vnode) {
+      var created = virtualDom.create(vnode);
+      created.customCreation = true;
+      return created
+    }
+
+    var root = createElementCustom(leftNode);
+    var patches = diff(leftNode, rightNode);
+    var newRoot = patch(root, patches, {render: createElementCustom});
+    expect(newRoot.childNodes[0].customCreation).toBe(true);
+
+  });
+});
