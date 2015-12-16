@@ -126,8 +126,7 @@ describe("Apply Patches", function () {
 
     var root = createElementCustom(leftNode);
     var patches = diff(leftNode, rightNode);
-    var result = luffa.getPatchDom(root, patches);
-    var newRoot = patch(root, patches, {render: createElementCustom});
-    expect(newRoot.childNodes[0].customCreation).toBe(true);
+    var newRoot = luffa.patch(root, patches, {render: createElementCustom});
+    expect($(newRoot).prop("outerHTML")).toBe('<div id="example"><h2 class="world">Hello World</h2></div>');
   });
 });

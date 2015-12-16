@@ -112,7 +112,6 @@ luffa.getPatchDom = function (dom, patches) {
         result = getSubResults(patchIndex, patches);
       } else {
         result = createResult(patches, patchIndex);
-        result.patchDom = luffa.applyPatch(result, dom);
       }
       results.push(result);
     }
