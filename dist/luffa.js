@@ -129,6 +129,12 @@ luffa.isArray = Array.isArray || function (arr) {
     return toString.call(arr) == '[object Array]';
   };
 
+luffa.isHook = function (hook) {
+  hook &&
+  (typeof hook.hook === "function" && !hook.hasOwnProperty("hook") ||
+  typeof hook.unhook === "function" && !hook.hasOwnProperty("unhook"))
+};
+
 
 //Copyright (c) 2014 Matt-Esch.
 //
@@ -497,7 +503,7 @@ function applyProperties(node, props, previous) {
 
     if (propValue === undefined) {
       removeProperty(node, propName, propValue, previous);
-    } else if (isHook(propValue)) {
+    } else if (luffa.isHook(propValue)) {
       removeProperty(node, propName, propValue, previous)
       if (propValue.hook) {
         propValue.hook(node,
@@ -514,18 +520,11 @@ function applyProperties(node, props, previous) {
   }
 }
 
-
-function isHook(hook) {
-  return hook &&
-    (typeof hook.hook === "function" && !hook.hasOwnProperty("hook") ||
-    typeof hook.unhook === "function" && !hook.hasOwnProperty("unhook"))
-}
-
 function removeProperty(node, propName, propValue, previous) {
   if (previous) {
-    var previousValue = previous[propName]
+    var previousValue = previous[propName];
 
-    if (!isHook(previousValue)) {
+    if (!luffa.isHook(previousValue)) {
       if (propName === "attributes") {
         for (var attrName in previousValue) {
           node.removeAttribute(attrName)
