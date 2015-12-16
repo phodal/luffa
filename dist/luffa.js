@@ -302,13 +302,13 @@ function applyPatch(rootNode, domNode, patchList, renderOptions) {
   var newNode;
   if (luffa.isArray(patchList)) {
     for (var i = 0; i < patchList.length; i++) {
-      newNode = luffa.patchOp(patchList[i], domNode, renderOptions);
+      newNode = luffa.patchOp(patchList[i], domNode, renderOptions).parentNode;
       if (domNode === rootNode) {
         rootNode = newNode
       }
     }
   } else {
-    newNode = luffa.patchOp(patchList, domNode, renderOptions);
+    newNode = luffa.patchOp(patchList, domNode, renderOptions).parentNode;
     if (domNode === rootNode) {
       rootNode = newNode
     }
@@ -357,21 +357,29 @@ luffa.patchOp = function (vpatch, domNode, renderOptions) {
 
   switch (type) {
     case VPatch.REMOVE:
-      return removeNode(domNode, vNode).parentNode;
+      return removeNode(domNode, vNode);
     case VPatch.INSERT:
-      return insertNode(domNode, patch, renderOptions).parentNode;
+      return insertNode(domNode, patch, renderOptions);
     case VPatch.VTEXT:
-      return stringPatch(domNode, vNode, patch, renderOptions).parentNode;
+      return stringPatch(domNode, vNode, patch, renderOptions);
     case VPatch.WIDGET:
-      return widgetPatch(domNode, vNode, patch, renderOptions).parentNode;
+      return widgetPatch(domNode, vNode, patch, renderOptions);
     case VPatch.VNODE:
       return vNodePatch(domNode, vNode, patch, renderOptions);
     case VPatch.ORDER:
+      var parentNode = domNode.parentNode;
       reorderChildren(domNode, patch);
-      return domNode;
+      return {
+        parentNode: parentNode,
+        newNode: domNode
+      };
     case VPatch.PROPS:
+      var parentNode = domNode.parentNode;
       applyProperties(domNode, patch, vNode.properties);
-      return domNode;
+      return {
+        parentNode: parentNode,
+        newNode: domNode
+      };
     case VPatch.THUNK:
       return replaceRoot(domNode,
         renderOptions.patch(domNode, patch, renderOptions));
