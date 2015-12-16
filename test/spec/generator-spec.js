@@ -109,9 +109,17 @@ describe("Apply Patches", function () {
     setFixtures(fixtures);
   });
   it("should return multi change", function () {
-    var leftNode = new virtualDom.VNode("div");
-    var rightNode = new virtualDom.VNode("div", {}, [new virtualDom.VNode("div")]);
-    
+    var leftNode = "", rightNode = "";
+    fixtures = '<div id="test"><div id="example"><h1 class="hello">Hello World</h1></div><div id="example2">hello</div></div>';
+    var change = '<div id="example"><p><h1 class="world">Hello World</h1></p><div id="example2"><h2 class="hello">world</h2></div></div>';
+    parser(fixtures, function (err, hscript) {
+      leftNode = eval(hscript);
+    });
+
+    parser(change, function (err, hscript) {
+      rightNode = eval(hscript);
+    });
+
     function createElementCustom(vnode) {
       var created = virtualDom.create(vnode);
       created.customCreation = true;
@@ -122,6 +130,5 @@ describe("Apply Patches", function () {
     var patches = diff(leftNode, rightNode);
     var newRoot = patch(root, patches, {render: createElementCustom});
     expect(newRoot.childNodes[0].customCreation).toBe(true);
-
   });
 });
