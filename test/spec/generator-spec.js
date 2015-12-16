@@ -105,13 +105,11 @@ describe("Apply Patches", function () {
   var parser, fixtures;
   beforeEach(function () {
     parser = require('html2hscript');
-    fixtures = '<div id="test"><div id="example"><h1 class="hello">Hello World</h1></div></div>';
-    setFixtures(fixtures);
   });
   it("should return multi change", function () {
     var leftNode = "", rightNode = "";
-    fixtures = '<div id="test"><div id="example"><h1 class="hello">Hello World</h1></div><div id="example2">hello</div></div>';
-    var change = '<div id="example"><p><h1 class="world">Hello World</h1></p><div id="example2"><h2 class="hello">world</h2></div></div>';
+    fixtures = '<div id="example"><h1 class="hello">Hello World</h1></div>';
+    var change = '<div id="example"><h2 class="world">Hello World</h2></div>';
     parser(fixtures, function (err, hscript) {
       leftNode = eval(hscript);
     });
@@ -128,6 +126,7 @@ describe("Apply Patches", function () {
 
     var root = createElementCustom(leftNode);
     var patches = diff(leftNode, rightNode);
+    var result = luffa.getPatchDom(root, patches);
     var newRoot = patch(root, patches, {render: createElementCustom});
     expect(newRoot.childNodes[0].customCreation).toBe(true);
   });

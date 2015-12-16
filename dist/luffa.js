@@ -118,6 +118,26 @@ luffa.getDiffDom = function (patches) {
     }
   }
   return results;
+};
+
+luffa.getPatchDom = function (dom, patches) {
+  var patchesKeys = Object.keys(patches);
+  var results = [];
+  for (var index in patchesKeys) {
+    var patchIndex = patchesKeys[index];
+    if (patchIndex !== 'a') {
+      var result;
+
+      if (luffa.isArray(patches[patchIndex])) {
+        result = getSubResults(patchIndex, patches);
+      } else {
+        result = createResult(patches, patchIndex);
+        result.patchDom = luffa.applyPatch(result, dom);
+      }
+      results.push(result);
+    }
+  }
+  return results;
 }
 ;
 
