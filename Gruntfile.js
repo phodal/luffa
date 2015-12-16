@@ -24,6 +24,8 @@ module.exports = function (grunt) {
           'src/_intro.js',
           'src/main.js',
           'src/helper.js',
+          'src/patch.js',
+          'src/patchOp.js',
           'src/_outro.js'
         ],
         dest: 'dist/<%= pkg.name.replace(".js", "") %>.js'
