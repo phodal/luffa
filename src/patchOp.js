@@ -29,7 +29,7 @@ luffa.patchOp = function (vpatch, domNode, renderOptions) {
     case VPatch.REMOVE:
       return removeNode(domNode, vNode);
     case VPatch.INSERT:
-      return insertNode(domNode, patch, renderOptions);
+      return insertNode(domNode, patch, renderOptions).parentNode;
     case VPatch.VTEXT:
       return stringPatch(domNode, vNode, patch, renderOptions);
     case VPatch.WIDGET:
@@ -69,7 +69,10 @@ function insertNode(parentNode, vNode, renderOptions) {
     parentNode.appendChild(newNode)
   }
 
-  return parentNode
+  return {
+    parentNode: parentNode,
+    newNode: newNode
+  }
 }
 
 function stringPatch(domNode, leftVNode, vText, renderOptions) {

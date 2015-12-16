@@ -38,15 +38,13 @@ VirtualPatch.prototype.type = "VirtualPatch";
 
 luffa.patch = function (rootNode, patches, renderOptions) {
   renderOptions = renderOptions || {};
-  renderOptions.patch = patchRecursive;
   renderOptions.render = render;
 
-  return renderOptions.patch(rootNode, patches, renderOptions)
+  return patchRecursive(rootNode, patches, renderOptions)
 };
 
 function patchRecursive(rootNode, patches, renderOptions) {
   var indices = patchIndices(patches);
-
   if (indices.length === 0) {
     return rootNode
   }

@@ -262,15 +262,13 @@ VirtualPatch.prototype.type = "VirtualPatch";
 
 luffa.patch = function (rootNode, patches, renderOptions) {
   renderOptions = renderOptions || {};
-  renderOptions.patch = patchRecursive;
   renderOptions.render = render;
 
-  return renderOptions.patch(rootNode, patches, renderOptions)
+  return patchRecursive(rootNode, patches, renderOptions)
 };
 
 function patchRecursive(rootNode, patches, renderOptions) {
   var indices = patchIndices(patches);
-
   if (indices.length === 0) {
     return rootNode
   }
@@ -356,7 +354,7 @@ luffa.patchOp = function (vpatch, domNode, renderOptions) {
     case VPatch.REMOVE:
       return removeNode(domNode, vNode);
     case VPatch.INSERT:
-      return insertNode(domNode, patch, renderOptions);
+      return insertNode(domNode, patch, renderOptions).parentNode;
     case VPatch.VTEXT:
       return stringPatch(domNode, vNode, patch, renderOptions);
     case VPatch.WIDGET:
@@ -396,7 +394,10 @@ function insertNode(parentNode, vNode, renderOptions) {
     parentNode.appendChild(newNode)
   }
 
-  return parentNode
+  return {
+    parentNode: parentNode,
+    newNode: newNode
+  }
 }
 
 function stringPatch(domNode, leftVNode, vText, renderOptions) {
