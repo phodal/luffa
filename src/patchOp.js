@@ -1,4 +1,3 @@
-
 //Copyright (c) 2014 Matt-Esch.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -27,13 +26,13 @@ luffa.patchOp = function (vpatch, domNode, renderOptions) {
 
   switch (type) {
     case VPatch.REMOVE:
-      return removeNode(domNode, vNode);
+      return removeNode(domNode, vNode).parentNode;
     case VPatch.INSERT:
       return insertNode(domNode, patch, renderOptions).parentNode;
     case VPatch.VTEXT:
-      return stringPatch(domNode, vNode, patch, renderOptions);
+      return stringPatch(domNode, vNode, patch, renderOptions).parentNode;
     case VPatch.WIDGET:
-      return widgetPatch(domNode, vNode, patch, renderOptions);
+      return widgetPatch(domNode, vNode, patch, renderOptions).parentNode;
     case VPatch.VNODE:
       return vNodePatch(domNode, vNode, patch, renderOptions);
     case VPatch.ORDER:
@@ -59,7 +58,10 @@ function removeNode(domNode, vNode) {
 
   destroyWidget(domNode, vNode);
 
-  return null
+  return {
+    parentNode: parentNode,
+    newNode: null
+  }
 }
 
 function insertNode(parentNode, vNode, renderOptions) {
@@ -90,7 +92,10 @@ function stringPatch(domNode, leftVNode, vText, renderOptions) {
     }
   }
 
-  return newNode
+  return {
+    parentNode: parentNode,
+    newNode: newNode
+  }
 }
 
 function widgetPatch(domNode, leftVNode, widget, renderOptions) {
@@ -113,7 +118,10 @@ function widgetPatch(domNode, leftVNode, widget, renderOptions) {
     destroyWidget(domNode, leftVNode)
   }
 
-  return newNode
+  return {
+    parentNode: parentNode,
+    newNode: newNode
+  }
 }
 
 function vNodePatch(domNode, leftVNode, vNode, renderOptions) {
@@ -124,7 +132,10 @@ function vNodePatch(domNode, leftVNode, vNode, renderOptions) {
     parentNode.replaceChild(newNode, domNode)
   }
 
-  return newNode
+  return {
+    parentNode: parentNode,
+    newNode: newNode
+  }
 }
 
 function destroyWidget(domNode, w) {
@@ -231,7 +242,7 @@ function patchObject(node, props, previous, propName, propValue) {
     return
   }
 
-  if(previousValue && isObject(previousValue) &&
+  if (previousValue && isObject(previousValue) &&
     getPrototype(previousValue) !== getPrototype(propValue)) {
     node[propName] = propValue
     return
