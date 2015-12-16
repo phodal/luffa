@@ -24,6 +24,7 @@ module.exports = function (grunt) {
           'src/_intro.js',
           'src/main.js',
           'src/helper.js',
+          'src/dom-index.js',
           'src/patch.js',
           'src/patchOp.js',
           'src/_outro.js'
