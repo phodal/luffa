@@ -302,15 +302,15 @@ function applyPatch(rootNode, domNode, patchList, renderOptions) {
   var newNode;
   if (luffa.isArray(patchList)) {
     for (var i = 0; i < patchList.length; i++) {
-      newNode = luffa.patchOp(patchList[i], domNode, renderOptions).parentNode;
+      newNode = luffa.patchOp(patchList[i], domNode, renderOptions);
       if (domNode === rootNode) {
-        rootNode = newNode
+        rootNode = newNode.parentNode
       }
     }
   } else {
-    newNode = luffa.patchOp(patchList, domNode, renderOptions).parentNode;
+    newNode = luffa.patchOp(patchList, domNode, renderOptions);
     if (domNode === rootNode) {
-      rootNode = newNode
+      rootNode = newNode.parentNode
     }
   }
 
