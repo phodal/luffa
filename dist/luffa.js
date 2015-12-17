@@ -274,6 +274,18 @@ luffa.patch = function (rootNode, patches, renderOptions) {
 };
 
 function patchRecursive(rootNode, patches, renderOptions) {
+
+  function patchIndices(patches) {
+    var indices = [];
+    for (var key in patches) {
+      if (key !== "a") {
+        indices.push(Number(key))
+      }
+    }
+
+    return indices;
+  }
+
   var indices = patchIndices(patches);
   if (indices.length === 0) {
     return rootNode
@@ -316,17 +328,6 @@ function applyPatch(rootNode, domNode, patchList, renderOptions) {
 
   console.log(newNode);
   return rootNode
-}
-
-function patchIndices(patches) {
-  var indices = [];
-  for (var key in patches) {
-    if (key !== "a") {
-      indices.push(Number(key))
-    }
-  }
-
-  return indices
 }
 
 
