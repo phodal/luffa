@@ -23,6 +23,7 @@ luffa.patchOp = function (vpatch, domNode, renderOptions) {
   var vNode = vpatch.vNode;
   var patch = vpatch.patch;
   var VPatch = VirtualPatch;
+  var parentNode = domNode.parentNode;
 
   switch (type) {
     case VPatch.REMOVE:
@@ -36,17 +37,17 @@ luffa.patchOp = function (vpatch, domNode, renderOptions) {
     case VPatch.VNODE:
       return vNodePatch(domNode, vNode, patch, renderOptions);
     case VPatch.ORDER:
-      var parentNode = domNode.parentNode;
       reorderChildren(domNode, patch);
       return {
         parentNode: parentNode,
+        method: 'reorder',
         newNode: domNode
       };
     case VPatch.PROPS:
-      var parentNode = domNode.parentNode;
       applyProperties(domNode, patch, vNode.properties);
       return {
         parentNode: parentNode,
+        method: 'properties',
         newNode: domNode
       };
     case VPatch.THUNK:
@@ -89,12 +90,12 @@ function insertNode(parentNode, vNode, renderOptions) {
 
 function stringPatch(domNode, leftVNode, vText, renderOptions) {
   var newNode;
+  var parentNode = domNode.parentNode;
 
   if (domNode.nodeType === 3) {
     domNode.replaceData(0, domNode.length, vText.text);
     newNode = domNode
   } else {
-    var parentNode = domNode.parentNode;
     newNode = renderOptions.render(vText, renderOptions);
 
     if (parentNode && newNode !== domNode) {

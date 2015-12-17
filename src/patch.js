@@ -84,6 +84,7 @@ function applyPatch(rootNode, domNode, patchList, renderOptions) {
     }
   }
 
+  console.log(newNode);
   return rootNode
 }
 
