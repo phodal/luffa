@@ -399,7 +399,8 @@ function removeNode(domNode, vNode) {
 
   return {
     parentNode: parentNode,
-    newNode: null
+    method: 'remove',
+    newNode: domNode
   }
 }
 
@@ -412,6 +413,7 @@ function insertNode(parentNode, vNode, renderOptions) {
 
   return {
     parentNode: parentNode,
+    method: 'insert',
     newNode: newNode
   }
 }
@@ -433,6 +435,7 @@ function stringPatch(domNode, leftVNode, vText, renderOptions) {
 
   return {
     parentNode: parentNode,
+    method: 'string',
     newNode: newNode
   }
 }
@@ -459,6 +462,7 @@ function widgetPatch(domNode, leftVNode, widget, renderOptions) {
 
   return {
     parentNode: parentNode,
+    method: 'widget',
     newNode: newNode
   }
 }
@@ -473,6 +477,7 @@ function vNodePatch(domNode, leftVNode, vNode, renderOptions) {
 
   return {
     parentNode: parentNode,
+    method: 'node',
     newNode: newNode
   }
 }
