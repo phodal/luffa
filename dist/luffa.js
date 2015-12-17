@@ -300,7 +300,9 @@ function patchRecursive(rootNode, patches, renderOptions) {
 
   for (var i = 0; i < indices.length; i++) {
     var nodeIndex = indices[i];
-    rootNode = applyPatch(rootNode, index[nodeIndex], patches[nodeIndex], renderOptions)
+    var applyNode = applyPatch(rootNode, index[nodeIndex], patches[nodeIndex], renderOptions);
+    rootNode = applyNode.rootNode;
+    console.log('%c' + $(applyNode.newNode.parentNode).prop('outerHTML') + ', %c' + $(applyNode.newNode.newNode).prop('outerHTML'), 'background-color: #eee;', 'background-color: red;');
   }
 
   return rootNode
@@ -326,8 +328,11 @@ function applyPatch(rootNode, domNode, patchList, renderOptions) {
     }
   }
 
-  console.log(newNode);
-  return rootNode
+
+  return {
+    rootNode: rootNode,
+    newNode: newNode
+  }
 }
 
 
@@ -526,12 +531,12 @@ function replaceRoot(oldRoot, newRoot) {
 
 function applyProperties(node, props, previous) {
   for (var propName in props) {
-    var propValue = props[propName]
+    var propValue = props[propName];
 
     if (propValue === undefined) {
       removeProperty(node, propName, propValue, previous);
     } else if (luffa.isHook(propValue)) {
-      removeProperty(node, propName, propValue, previous)
+      removeProperty(node, propName, propValue, previous);
       if (propValue.hook) {
         propValue.hook(node,
           propName,
@@ -572,12 +577,12 @@ function removeProperty(node, propName, propValue, previous) {
 }
 
 function patchObject(node, props, previous, propName, propValue) {
-  var previousValue = previous ? previous[propName] : undefined
+  var previousValue = previous ? previous[propName] : undefined;
 
   // Set attributes
   if (propName === "attributes") {
     for (var attrName in propValue) {
-      var attrValue = propValue[attrName]
+      var attrValue = propValue[attrName];
 
       if (attrValue === undefined) {
         node.removeAttribute(attrName)
@@ -591,7 +596,7 @@ function patchObject(node, props, previous, propName, propValue) {
 
   if (previousValue && isObject(previousValue) &&
     getPrototype(previousValue) !== getPrototype(propValue)) {
-    node[propName] = propValue
+    node[propName] = propValue;
     return
   }
 
@@ -599,10 +604,10 @@ function patchObject(node, props, previous, propName, propValue) {
     node[propName] = {}
   }
 
-  var replacer = propName === "style" ? "" : undefined
+  var replacer = propName === "style" ? "" : undefined;
 
   for (var k in propValue) {
-    var value = propValue[k]
+    var value = propValue[k];
     node[propName][k] = (value === undefined) ? replacer : value
   }
 }
