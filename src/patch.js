@@ -61,6 +61,7 @@ function patchRecursive(rootNode, patches, renderOptions) {
     return rootNode
   }
 
+  var originRootNode = rootNode, applyNode;
   var index = domIndex(rootNode, patches.a, indices);
   var ownerDocument = rootNode.ownerDocument;
 
@@ -70,10 +71,10 @@ function patchRecursive(rootNode, patches, renderOptions) {
 
   for (var i = 0; i < indices.length; i++) {
     var nodeIndex = indices[i];
-    var applyNode = applyPatch(rootNode, index[nodeIndex], patches[nodeIndex], renderOptions);
+    applyNode = applyPatch(rootNode, index[nodeIndex], patches[nodeIndex], renderOptions);
     rootNode = applyNode.rootNode;
-    console.log('%c' + $(applyNode.newNodes[0].parentNode).prop('outerHTML') + ', %c' + $(applyNode.newNodes[0].newNode).prop('outerHTML'), 'background-color: #eee;', 'background-color: red;');
   }
+    console.log('%c' + ownerDocument + ', %c' + $(applyNode.newNodes[0]).prop('outerHTML'), 'background-color: #eee;', 'background-color: red;');
 
   return rootNode
 }
