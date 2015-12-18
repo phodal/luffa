@@ -302,7 +302,7 @@ function patchRecursive(rootNode, patches, renderOptions) {
     var nodeIndex = indices[i];
     var applyNode = applyPatch(rootNode, index[nodeIndex], patches[nodeIndex], renderOptions);
     rootNode = applyNode.rootNode;
-    console.log('%c' + $(applyNode.newNode.parentNode).prop('outerHTML') + ', %c' + $(applyNode.newNode.newNode).prop('outerHTML'), 'background-color: #eee;', 'background-color: red;');
+    console.log('%c' + $(applyNode.newNodes[0].parentNode).prop('outerHTML') + ', %c' + $(applyNode.newNodes[0].newNode).prop('outerHTML'), 'background-color: #eee;', 'background-color: red;');
   }
 
   return rootNode
@@ -314,15 +314,18 @@ function applyPatch(rootNode, domNode, patchList, renderOptions) {
   }
 
   var newNode;
+  var newNodes = [];
   if (luffa.isArray(patchList)) {
     for (var i = 0; i < patchList.length; i++) {
       newNode = luffa.patchOp(patchList[i], domNode, renderOptions);
+      newNodes.push(newNode);
       if (domNode === rootNode) {
         rootNode = newNode.parentNode
       }
     }
   } else {
     newNode = luffa.patchOp(patchList, domNode, renderOptions);
+    newNodes.push(newNode);
     if (domNode === rootNode) {
       rootNode = newNode.parentNode
     }
@@ -331,7 +334,7 @@ function applyPatch(rootNode, domNode, patchList, renderOptions) {
 
   return {
     rootNode: rootNode,
-    newNode: newNode
+    newNodes: newNodes
   }
 }
 
