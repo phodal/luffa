@@ -273,6 +273,18 @@ luffa.patch = function (rootNode, patches, renderOptions) {
   return patchRecursive(rootNode, patches, renderOptions)
 };
 
+function printChange(originRootNodeHTML, applyNode) {
+  console.log($(applyNode));
+  var changedHTML = $(applyNode.newNodes[0].newNode).prop('outerHTML');
+  var isStringChange = changedHTML === undefined && applyNode.newNodes[0].method === 'string';
+  if (isStringChange) {
+    changedHTML = $(applyNode.newNodes[0].newNode).text()
+  }
+  var originHTMLStyle = 'background-color: #eee;';
+  var changedHTMLStyle = 'background-color: red;';
+
+  console.log('%c' + originRootNodeHTML + ', %c' + changedHTML, originHTMLStyle, changedHTMLStyle);
+}
 function patchRecursive(rootNode, patches, renderOptions) {
 
   function patchIndices(patches) {
@@ -304,7 +316,8 @@ function patchRecursive(rootNode, patches, renderOptions) {
     applyNode = applyPatch(rootNode, index[nodeIndex], patches[nodeIndex], renderOptions);
     rootNode = applyNode.rootNode;
   }
-  console.log('%c' + originRootNodeHTML + ', %c' + $(applyNode.newNodes[0].newNode).prop('outerHTML'), 'background-color: #eee;', 'background-color: red;');
+
+  printChange(originRootNodeHTML, applyNode);
 
   return rootNode
 }
