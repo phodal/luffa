@@ -1,5 +1,6 @@
 {
   "name": "luffa",
+  "version": "0.0.1",
   "description": "A Test Framework",
   "main": "index.js",
   "authors": [
