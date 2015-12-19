@@ -10575,11 +10575,17 @@ luffa.patch = function (rootNode, patches, renderOptions) {
 };
 
 luffa.ORIGIN_STYLE = 'background-color: #eee;';
-luffa.CHANGE_STYLE = 'background-color: red;';
+luffa.CHANGE_STYLE = 'background-color: yellow;';
+luffa.DELETE_STYLE = 'background-color: red;';
 luffa.NEW_STYLE = 'background-color: green;';
 
 function printInsert(applyNode) {
   console.log('%c' + $(applyNode.rootNode).prop('outerHTML').toString().replace('<luffa>', '%c').replace('</luffa>', '%c'), luffa.ORIGIN_STYLE, luffa.NEW_STYLE, luffa.ORIGIN_STYLE);
+}
+
+function printRemove(applyNode, originRootNodeHTML) {
+  var newNode = $(applyNode.newNodes[0].newNode).prop('outerHTML');
+  console.log('%c' + originRootNodeHTML.replace(newNode, '%c' + newNode + '%c'), luffa.ORIGIN_STYLE, luffa.DELETE_STYLE, luffa.ORIGIN_STYLE);
 }
 
 function printNode(applyNode, originRootNodeHTML) {
@@ -10607,7 +10613,7 @@ function printChange(originRootNodeHTML, applyNode) {
     case 'node':
       return printNode(applyNode, originRootNodeHTML);
     case 'remove':
-      return '';
+      return printRemove(applyNode, originRootNodeHTML);
     default:
       return printDefault(originRootNodeHTML, changedHTML);
   }
