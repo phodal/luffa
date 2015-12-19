@@ -93,7 +93,7 @@ describe("Apply Patches", function () {
   });
   it("should able patch text", function () {
     var leftNode = "", rightNode = "";
-    fixtures = '<div id="example"><h1 class="hello">Hello World</h1><h2>fs</h2></div>';
+    fixtures = '<div id="example"><h1 class="hello">Hello World</h1><h2>FSSSSS</h2></div>';
     var change = '<div id="example"><h1 class="hello">Hello</h1><h2>fs</h2></div>';
     parser(fixtures, function (err, hscript) {
       leftNode = eval(hscript);
