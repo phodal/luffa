@@ -79,9 +79,10 @@ function removeNode(domNode, vNode) {
 
 function insertNode(parentNode, vNode, renderOptions) {
   var newNode = renderOptions.render(vNode, renderOptions);
-
+  var luffa = document.createElement('luffa');
   if (parentNode) {
-    parentNode.appendChild(newNode)
+    luffa.appendChild(newNode);
+    parentNode.appendChild(luffa)
   }
 
   return {

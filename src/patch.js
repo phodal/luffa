@@ -45,15 +45,19 @@ luffa.patch = function (rootNode, patches, renderOptions) {
 
 function printChange(originRootNodeHTML, applyNode) {
   var changedHTML = $(applyNode.newNodes[0].newNode).prop('outerHTML');
-  var isStringChange = changedHTML === undefined && applyNode.newNodes[0].method === 'string';
-  if (isStringChange) {
-    changedHTML = $(applyNode.newNodes[0].newNode).text()
-  }
   var originHTMLStyle = 'background-color: #eee;';
   var changedHTMLStyle = 'background-color: red;';
 
-  console.log('%c' + originRootNodeHTML + ', %c' + changedHTML, originHTMLStyle, changedHTMLStyle);
+  if (changedHTML === undefined && applyNode.newNodes[0].method === 'string') {
+    changedHTML = $(applyNode.newNodes[0].newNode).text()
+  }
+  if (applyNode.newNodes[0].method === 'insert') {
+    console.log('%c' + $(applyNode.rootNode).prop('outerHTML').toString().replace('<luffa>', '%c').replace('</luffa>', '%c'), originHTMLStyle,  'background-color: green;', originHTMLStyle);
+  } else {
+    console.log('%c' + originRootNodeHTML + ', %c' + changedHTML, originHTMLStyle, changedHTMLStyle);
+  }
 }
+
 function patchRecursive(rootNode, patches, renderOptions) {
 
   function patchIndices(patches) {

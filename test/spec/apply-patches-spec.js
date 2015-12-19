@@ -41,7 +41,7 @@ describe("Apply Patches", function () {
 
     var patches = diff(leftNode, rightNode);
     var newRoot = luffa.patch(virtualDom.create(leftNode), patches);
-    expect($(newRoot).prop("outerHTML")).toBe('<div id="example"><h1 class="hello">Hello World</h1><h2>fs</h2></div>');
+    expect($(newRoot).prop("outerHTML")).toBe('<div id="example"><h1 class="hello">Hello World</h1><luffa><h2>fs</h2></luffa></div>');
   });
   it("should able patch remove", function () {
     var leftNode = "", rightNode = "";
