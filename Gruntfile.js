@@ -21,6 +21,8 @@ module.exports = function (grunt) {
       },
       dist: {
         src: [
+          'vendor/html2hscript.js',
+          'bower_components/virtual-dom/dist/virtual-dom.js',
           'src/_intro.js',
           'src/main.js',
           'src/helper.js',
@@ -32,7 +34,18 @@ module.exports = function (grunt) {
         dest: 'dist/<%= pkg.name.replace(".js", "") %>.js'
       }
     },
-
+    uglify: {
+      options: {
+        compress: {
+          drop_console: true
+        }
+      },
+      my_target: {
+        files: {
+          'dist/luffa.min.js': ['dist/luffa.js']
+        }
+      }
+    },
     replace: {
       dist: {
         options: {
@@ -70,7 +83,7 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.task.registerTask('vendor', 'A sample task that logs stuff.', function() {
+  grunt.task.registerTask('vendor', 'Convert Js.', function () {
     //browserify
     var shell = require('shelljs');
     shell.mkdir('vendor');
@@ -79,5 +92,5 @@ module.exports = function (grunt) {
   });
   require('load-grunt-tasks')(grunt);
 
-  grunt.registerTask('default', ['vendor', 'concat', 'replace', 'karma', 'coverage']);
+  grunt.registerTask('default', ['vendor', 'concat', 'uglify', 'replace', 'karma']);
 };
