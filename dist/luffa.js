@@ -10575,18 +10575,19 @@ function printNode(applyNode, originRootNodeHTML) {
   console.log('%c' + originRootNodeHTML.replace(originNode, '%c' + originNode + '%c') + ', %c' + newNode, luffa.ORIGIN_STYLE, luffa.CHANGE_STYLE, luffa.ORIGIN_STYLE, luffa.NEW_STYLE);
 }
 
-function printDefault(originRootNodeHTML, changedHTML) {
+function printDefault(applyNode, originRootNodeHTML) {
+  var changedHTML = $(applyNode.newNodes[0].newNode).prop('outerHTML');
   return console.log('%c' + originRootNodeHTML + ', %c' + changedHTML, luffa.ORIGIN_STYLE, luffa.CHANGE_STYLE);
 }
 
-function printChange(originRootNodeHTML, applyNode) {
-  var changedHTML = $(applyNode.newNodes[0].newNode).prop('outerHTML');
+function printString(applyNode, originRootNodeHTML) {
+  var originHTML = $(render(applyNode.newNodes[0].vNode)).text();
+  var changedHTML = $(applyNode.newNodes[0].newNode).text();
+  return console.log('%c' + originRootNodeHTML.replace(originHTML, '%c' + originHTML + '%c') + ',%c' + changedHTML, luffa.ORIGIN_STYLE, luffa.CHANGE_STYLE, luffa.ORIGIN_STYLE, luffa.NEW_STYLE);
+}
 
+function printChange(originRootNodeHTML, applyNode) {
   var patchType = applyNode.newNodes[0].method;
-  console.log(patchType);
-  if (changedHTML === undefined && patchType === 'string') {
-    changedHTML = $(applyNode.newNodes[0].newNode).text()
-  }
 
   switch (patchType) {
     case 'insert':
@@ -10595,8 +10596,10 @@ function printChange(originRootNodeHTML, applyNode) {
       return printNode(applyNode, originRootNodeHTML);
     case 'remove':
       return printRemove(applyNode, originRootNodeHTML);
+    case 'string':
+      return printString(applyNode, originRootNodeHTML);
     default:
-      return printDefault(originRootNodeHTML, changedHTML);
+      return printDefault(applyNode, originRootNodeHTML);
   }
 }
 
