@@ -10574,18 +10574,34 @@ luffa.patch = function (rootNode, patches, renderOptions) {
   return patchRecursive(rootNode, patches, renderOptions)
 };
 
+luffa.ORIGIN_STYLE = 'background-color: #eee;';
+luffa.CHANGE_STYLE  = 'background-color: red;';
+luffa.NEW_STYLE = 'background-color: green;';
+
+function printInsert(applyNode) {
+  console.log('%c' + $(applyNode.rootNode).prop('outerHTML').toString().replace('<luffa>', '%c').replace('</luffa>', '%c'), luffa.ORIGIN_STYLE, luffa.NEW_STYLE, luffa.ORIGIN_STYLE);
+}
+
+function printNode(applyNode, originRootNodeHTML) {
+  var originNode = $(applyNode.newNodes[0].vNode).prop('outerHTML');
+  var newNode = $(applyNode.newNodes[0].newNode).prop('outerHTML');
+  console.log('%c' + originRootNodeHTML.replace(originNode, '%c' + originNode + '%c') + ', %c' + newNode, luffa.ORIGIN_STYLE, luffa.CHANGE_STYLE, luffa.ORIGIN_STYLE, luffa.NEW_STYLE);
+}
 function printChange(originRootNodeHTML, applyNode) {
   var changedHTML = $(applyNode.newNodes[0].newNode).prop('outerHTML');
-  var originHTMLStyle = 'background-color: #eee;';
-  var changedHTMLStyle = 'background-color: red;';
 
-  if (changedHTML === undefined && applyNode.newNodes[0].method === 'string') {
+  var patchType = applyNode.newNodes[0].method;
+  console.log(patchType);
+  if (changedHTML === undefined && patchType === 'string') {
     changedHTML = $(applyNode.newNodes[0].newNode).text()
   }
-  if (applyNode.newNodes[0].method === 'insert') {
-    console.log('%c' + $(applyNode.rootNode).prop('outerHTML').toString().replace('<luffa>', '%c').replace('</luffa>', '%c'), originHTMLStyle,  'background-color: green;', originHTMLStyle);
+
+  if (patchType === 'insert') {
+    printInsert(applyNode);
+  } else if (patchType === 'node') {
+    printNode(applyNode, originRootNodeHTML);
   } else {
-    console.log('%c' + originRootNodeHTML + ', %c' + changedHTML, originHTMLStyle, changedHTMLStyle);
+    //console.log('%c' + originRootNodeHTML + ', %c' + changedHTML, originHTMLStyle, changedHTMLStyle);
   }
 }
 
@@ -10609,7 +10625,7 @@ function patchRecursive(rootNode, patches, renderOptions) {
 
   var index = domIndex(rootNode, patches.a, indices);
   var ownerDocument = rootNode.ownerDocument;
-  var applyNode, originRootNodeHTML = $(rootNode).prop("outerHTML");
+  var applyNode, originRootNodeHTML = $(rootNode.cloneNode(true)).prop("outerHTML");
 
   if (!renderOptions.document && ownerDocument !== document) {
     renderOptions.document = ownerDocument
@@ -10798,6 +10814,7 @@ function widgetPatch(domNode, leftVNode, widget, renderOptions) {
   return {
     parentNode: parentNode,
     method: 'widget',
+    vNode: leftVNode,
     newNode: newNode
   }
 }
@@ -10813,6 +10830,7 @@ function vNodePatch(domNode, leftVNode, vNode, renderOptions) {
   return {
     parentNode: parentNode,
     method: 'node',
+    vNode: renderOptions.render(leftVNode, renderOptions),
     newNode: newNode
   }
 }

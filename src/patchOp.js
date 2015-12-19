@@ -139,6 +139,7 @@ function widgetPatch(domNode, leftVNode, widget, renderOptions) {
   return {
     parentNode: parentNode,
     method: 'widget',
+    vNode: leftVNode,
     newNode: newNode
   }
 }
@@ -154,6 +155,7 @@ function vNodePatch(domNode, leftVNode, vNode, renderOptions) {
   return {
     parentNode: parentNode,
     method: 'node',
+    vNode: renderOptions.render(leftVNode, renderOptions),
     newNode: newNode
   }
 }
