@@ -44,7 +44,6 @@ luffa.patch = function (rootNode, patches, renderOptions) {
 };
 
 function printChange(originRootNodeHTML, applyNode) {
-  console.log($(applyNode));
   var changedHTML = $(applyNode.newNodes[0].newNode).prop('outerHTML');
   var isStringChange = changedHTML === undefined && applyNode.newNodes[0].method === 'string';
   if (isStringChange) {

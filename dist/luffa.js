@@ -274,7 +274,6 @@ luffa.patch = function (rootNode, patches, renderOptions) {
 };
 
 function printChange(originRootNodeHTML, applyNode) {
-  console.log($(applyNode));
   var changedHTML = $(applyNode.newNodes[0].newNode).prop('outerHTML');
   var isStringChange = changedHTML === undefined && applyNode.newNodes[0].method === 'string';
   if (isStringChange) {
@@ -396,6 +395,7 @@ luffa.patchOp = function (vpatch, domNode, renderOptions) {
       return {
         parentNode: parentNode,
         method: 'reorder',
+        vNode: vNode,
         newNode: domNode
       };
     case VPatch.PROPS:
@@ -403,6 +403,7 @@ luffa.patchOp = function (vpatch, domNode, renderOptions) {
       return {
         parentNode: parentNode,
         method: 'properties',
+        vNode: vNode,
         newNode: domNode
       };
     case VPatch.THUNK:
@@ -425,6 +426,7 @@ function removeNode(domNode, vNode) {
   return {
     parentNode: parentNode,
     method: 'remove',
+    vNode: vNode,
     newNode: domNode
   }
 }
@@ -439,6 +441,7 @@ function insertNode(parentNode, vNode, renderOptions) {
   return {
     parentNode: parentNode,
     method: 'insert',
+    vNode: vNode,
     newNode: newNode
   }
 }
@@ -461,6 +464,7 @@ function stringPatch(domNode, leftVNode, vText, renderOptions) {
   return {
     parentNode: parentNode,
     method: 'string',
+    vNode: leftVNode,
     newNode: newNode
   }
 }
