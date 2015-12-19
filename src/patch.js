@@ -17,25 +17,6 @@
 //LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //THE SOFTWARE.
-
-VirtualPatch.NONE = 0
-VirtualPatch.VTEXT = 1
-VirtualPatch.VNODE = 2
-VirtualPatch.WIDGET = 3
-VirtualPatch.PROPS = 4
-VirtualPatch.ORDER = 5
-VirtualPatch.INSERT = 6
-VirtualPatch.REMOVE = 7
-VirtualPatch.THUNK = 8
-
-function VirtualPatch(type, vNode, patch) {
-  this.type = Number(type)
-  this.vNode = vNode
-  this.patch = patch
-}
-
-VirtualPatch.prototype.type = "VirtualPatch";
-
 luffa.patch = function (rootNode, patches, renderOptions) {
   renderOptions = renderOptions || {};
   renderOptions.render = render;
