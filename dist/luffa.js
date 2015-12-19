@@ -10412,7 +10412,7 @@ function appendPatch(apply, patch) {
 var luffa = function () {
 };
 
-luffa.VERSION = '0.0.0';
+luffa.VERSION = '0.0.1';
 
 window.luffa = luffa;
 var h = virtualDom.h;
