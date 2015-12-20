@@ -10570,8 +10570,9 @@ function printRemove(applyNode, originRootNodeHTML, patchIndex) {
 }
 
 function printNode(applyNode, originRootNodeHTML, patchIndex) {
-  var originNode = $(applyNode.newNodes[patchIndex].vNode).prop('outerHTML');
+  var originNode = $(applyNode.newNodes[patchIndex].vNode).prop('outerHTML') || $(applyNode.newNodes[patchIndex].vNode).text();
   var newNode = $(applyNode.newNodes[patchIndex].newNode).prop('outerHTML');
+
   console.log('%c' + originRootNodeHTML.replace(originNode, '%c' + originNode + '%c') + ', %c' + newNode, luffa.ORIGIN_STYLE, luffa.CHANGE_STYLE, luffa.ORIGIN_STYLE, luffa.NEW_STYLE);
 }
 
