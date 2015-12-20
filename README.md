@@ -2,11 +2,19 @@
 
 > A Test Framework Helper for Fun
 
+**Process**
+
+1. Fixtures HTML -> HyperScript
+2. Changed HTML -> HyperScript
+3. HyperScript -> Virtual Node
+4. Diff Virtual Node -> Generate Change
+
 ###GOAL
 
 1. HighLight DOM Change
 2. Generator Test
 
+![Screenshot](screenshot.jpg)
 
 ##License##
 
