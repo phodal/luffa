@@ -1,4 +1,3 @@
-
 describe("Apply Patches", function () {
   var parser, fixtures;
   beforeEach(function () {
@@ -122,5 +121,21 @@ describe("Apply Patches", function () {
     var patches = diff(leftNode, rightNode);
     var newRoot = luffa.patch(virtualDom.create(leftNode), patches);
     expect($(newRoot).prop("outerHTML")).toBe('<div id="example"><select name="select" id="select"><option value="2">2</option><option value="1">1</option></select></div>');
+  });
+  it("should able patch text", function () {
+    var leftNode = "", rightNode = "";
+    fixtures = '<div id="test"><div id="example"><h1 class="hello">Hello World</h1></div><div id="example2">hello</div></div>';
+    var change = '<div id="example"><p><h1 class="world">Hello World</h1></p><div id="example2"><h2 class="hello">world</h2></div></div>';
+    parser(fixtures, function (err, hscript) {
+      leftNode = eval(hscript);
+    });
+
+    parser(change, function (err, hscript) {
+      rightNode = eval(hscript);
+    });
+
+    var patches = diff(leftNode, rightNode);
+    var newRoot = luffa.patch(virtualDom.create(leftNode), patches);
+    expect($(newRoot).prop("outerHTML")).toBe('<div id="example"><p></p><h1 class="world">Hello World</h1><luffa><p></p></luffa><luffa><div id="example2"><h2 class="hello">world</h2></div></luffa></div>');
   });
 });
