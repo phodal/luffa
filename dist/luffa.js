@@ -10587,19 +10587,22 @@ function printString(applyNode, originRootNodeHTML) {
 }
 
 function printChange(originRootNodeHTML, applyNode) {
-  var patchType = applyNode.newNodes[0].method;
+  var patchType;
 
-  switch (patchType) {
-    case 'insert':
-      return printInsert(applyNode);
-    case 'node':
-      return printNode(applyNode, originRootNodeHTML);
-    case 'remove':
-      return printRemove(applyNode, originRootNodeHTML);
-    case 'string':
-      return printString(applyNode, originRootNodeHTML);
-    default:
-      return printDefault(applyNode, originRootNodeHTML);
+  for (var i = 0; i < applyNode.newNodes.length; i++) {
+    patchType = applyNode.newNodes[i].method;
+    switch (patchType) {
+      case 'insert':
+        return printInsert(applyNode);
+      case 'node':
+        return printNode(applyNode, originRootNodeHTML);
+      case 'remove':
+        return printRemove(applyNode, originRootNodeHTML);
+      case 'string':
+        return printString(applyNode, originRootNodeHTML);
+      default:
+        return printDefault(applyNode, originRootNodeHTML);
+    }
   }
 }
 
