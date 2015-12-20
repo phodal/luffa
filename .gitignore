@@ -75,3 +75,5 @@ crashlytics-build.properties
 
 bower_components
 vendor
+
+dist/luffa.min.js

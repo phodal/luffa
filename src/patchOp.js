@@ -65,12 +65,14 @@ luffa.patchOp = function (vpatch, domNode, renderOptions) {
         newNode: domNode
       };
     case VPatch.PROPS:
-      applyProperties(domNode, patch, vNode.properties);
+      var extend = [];
+      applyProperties(domNode, patch, vNode.properties, extend);
       return {
         parentNode: parentNode,
-        method: 'properties',
+        method: 'prop',
         vNode: vNode,
-        newNode: domNode
+        newNode: domNode,
+        extend: extend
       };
     case VPatch.THUNK:
       return replaceRoot(domNode,
@@ -219,7 +221,7 @@ function replaceRoot(oldRoot, newRoot) {
   return newRoot;
 }
 
-function applyProperties(node, props, previous) {
+function applyProperties(node, props, previous, extend) {
   for (var propName in props) {
     var propValue = props[propName];
 
@@ -236,7 +238,8 @@ function applyProperties(node, props, previous) {
       if (isObject(propValue)) {
         patchObject(node, props, previous, propName, propValue);
       } else {
-        node[propName] = propValue
+        node[propName] = propValue;
+        extend.push({origin: node.cloneNode(true), propName: propName, replace: propValue});
       }
     }
   }

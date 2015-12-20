@@ -10589,6 +10589,13 @@ function printString(applyNode, originRootNodeHTML, patchIndex) {
   return console.log('%c' + originRootNodeHTML.replace(originHTML, '%c' + originHTML + '%c') + ',%c' + changedHTML, luffa.ORIGIN_STYLE, luffa.CHANGE_STYLE, luffa.ORIGIN_STYLE, luffa.NEW_STYLE);
 }
 
+function printProp(applyNode, originRootNodeHTML, patchIndex) {
+  var originHTML = $(render(applyNode.newNodes[patchIndex].vNode)).prop('outerHTML');
+  var changedHTML = $(applyNode.newNodes[patchIndex].newNode).prop('outerHTML');
+
+  return console.log('%c' + originRootNodeHTML.replace(originHTML, '%c' + originHTML + '%c') + ',%c' + changedHTML, luffa.ORIGIN_STYLE, luffa.CHANGE_STYLE, luffa.ORIGIN_STYLE, luffa.NEW_STYLE);
+}
+
 function printChange(originRootNodeHTML, applyNode) {
   var patchType;
 
@@ -10606,6 +10613,9 @@ function printChange(originRootNodeHTML, applyNode) {
         break;
       case 'string':
         printString(applyNode, originRootNodeHTML, patchIndex);
+        break;
+      case 'prop':
+        printProp(applyNode, originRootNodeHTML, patchIndex);
         break;
       default:
         printDefault(applyNode, originRootNodeHTML, patchIndex);
@@ -10746,12 +10756,14 @@ luffa.patchOp = function (vpatch, domNode, renderOptions) {
         newNode: domNode
       };
     case VPatch.PROPS:
-      applyProperties(domNode, patch, vNode.properties);
+      var extend = [];
+      applyProperties(domNode, patch, vNode.properties, extend);
       return {
         parentNode: parentNode,
-        method: 'properties',
+        method: 'prop',
         vNode: vNode,
-        newNode: domNode
+        newNode: domNode,
+        extend: extend
       };
     case VPatch.THUNK:
       return replaceRoot(domNode,
@@ -10900,7 +10912,7 @@ function replaceRoot(oldRoot, newRoot) {
   return newRoot;
 }
 
-function applyProperties(node, props, previous) {
+function applyProperties(node, props, previous, extend) {
   for (var propName in props) {
     var propValue = props[propName];
 
@@ -10917,7 +10929,8 @@ function applyProperties(node, props, previous) {
       if (isObject(propValue)) {
         patchObject(node, props, previous, propName, propValue);
       } else {
-        node[propName] = propValue
+        node[propName] = propValue;
+        extend.push({origin: node.cloneNode(true), propName: propName, replace: propValue});
       }
     }
   }
