@@ -10564,44 +10564,46 @@ function printInsert(applyNode) {
   console.log('%c' + $(applyNode.rootNode).prop('outerHTML').toString().replace('<luffa>', '%c').replace('</luffa>', '%c'), luffa.ORIGIN_STYLE, luffa.NEW_STYLE, luffa.ORIGIN_STYLE);
 }
 
-function printRemove(applyNode, originRootNodeHTML) {
-  var newNode = $(applyNode.newNodes[0].newNode).prop('outerHTML');
+function printRemove(applyNode, originRootNodeHTML, patchIndex) {
+  var newNode = $(applyNode.newNodes[patchIndex].newNode).prop('outerHTML');
   console.log('%c' + originRootNodeHTML.replace(newNode, '%c' + newNode + '%c'), luffa.ORIGIN_STYLE, luffa.DELETE_STYLE, luffa.ORIGIN_STYLE);
 }
 
-function printNode(applyNode, originRootNodeHTML) {
-  var originNode = $(applyNode.newNodes[0].vNode).prop('outerHTML');
-  var newNode = $(applyNode.newNodes[0].newNode).prop('outerHTML');
+function printNode(applyNode, originRootNodeHTML, patchIndex) {
+  var originNode = $(applyNode.newNodes[patchIndex].vNode).prop('outerHTML');
+  var newNode = $(applyNode.newNodes[patchIndex].newNode).prop('outerHTML');
   console.log('%c' + originRootNodeHTML.replace(originNode, '%c' + originNode + '%c') + ', %c' + newNode, luffa.ORIGIN_STYLE, luffa.CHANGE_STYLE, luffa.ORIGIN_STYLE, luffa.NEW_STYLE);
 }
 
-function printDefault(applyNode, originRootNodeHTML) {
-  var changedHTML = $(applyNode.newNodes[0].newNode).prop('outerHTML');
-  return console.log('%c' + originRootNodeHTML + ', %c' + changedHTML, luffa.ORIGIN_STYLE, luffa.CHANGE_STYLE);
+function printDefault(applyNode, originRootNodeHTML, patchIndex) {
+  var newNode = $(applyNode.newNodes[patchIndex].newNode).prop('outerHTML');
+
+  return console.log('%c' + originRootNodeHTML + ', %c' + newNode, luffa.ORIGIN_STYLE, luffa.CHANGE_STYLE);
 }
 
-function printString(applyNode, originRootNodeHTML) {
-  var originHTML = $(render(applyNode.newNodes[0].vNode)).text();
-  var changedHTML = $(applyNode.newNodes[0].newNode).text();
+function printString(applyNode, originRootNodeHTML, patchIndex) {
+  var originHTML = $(render(applyNode.newNodes[patchIndex].vNode)).text();
+  var changedHTML = $(applyNode.newNodes[patchIndex].newNode).text();
+
   return console.log('%c' + originRootNodeHTML.replace(originHTML, '%c' + originHTML + '%c') + ',%c' + changedHTML, luffa.ORIGIN_STYLE, luffa.CHANGE_STYLE, luffa.ORIGIN_STYLE, luffa.NEW_STYLE);
 }
 
 function printChange(originRootNodeHTML, applyNode) {
   var patchType;
 
-  for (var i = 0; i < applyNode.newNodes.length; i++) {
-    patchType = applyNode.newNodes[i].method;
+  for (var patchIndex = 0; patchIndex < applyNode.newNodes.length; patchIndex++) {
+    patchType = applyNode.newNodes[patchIndex].method;
     switch (patchType) {
       case 'insert':
         return printInsert(applyNode);
       case 'node':
-        return printNode(applyNode, originRootNodeHTML);
+        return printNode(applyNode, originRootNodeHTML, patchIndex);
       case 'remove':
-        return printRemove(applyNode, originRootNodeHTML);
+        return printRemove(applyNode, originRootNodeHTML, patchIndex);
       case 'string':
-        return printString(applyNode, originRootNodeHTML);
+        return printString(applyNode, originRootNodeHTML, patchIndex);
       default:
-        return printDefault(applyNode, originRootNodeHTML);
+        return printDefault(applyNode, originRootNodeHTML, patchIndex);
     }
   }
 }
