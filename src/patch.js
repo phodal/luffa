@@ -64,15 +64,19 @@ function printChange(originRootNodeHTML, applyNode) {
     patchType = applyNode.newNodes[patchIndex].method;
     switch (patchType) {
       case 'insert':
-        return printInsert(applyNode);
+        printInsert(applyNode);
+        break;
       case 'node':
-        return printNode(applyNode, originRootNodeHTML, patchIndex);
+        printNode(applyNode, originRootNodeHTML, patchIndex);
+        break;
       case 'remove':
-        return printRemove(applyNode, originRootNodeHTML, patchIndex);
+        printRemove(applyNode, originRootNodeHTML, patchIndex);
+        break;
       case 'string':
-        return printString(applyNode, originRootNodeHTML, patchIndex);
+        printString(applyNode, originRootNodeHTML, patchIndex);
+        break;
       default:
-        return printDefault(applyNode, originRootNodeHTML, patchIndex);
+        printDefault(applyNode, originRootNodeHTML, patchIndex);
     }
   }
 }
