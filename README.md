@@ -2,6 +2,8 @@
 
 > A Test Framework Helper for Fun
 
+Document: [基于Virtual DOM与Diff DOM的测试代码生成](https://www.phodal.com/blog/virtual-dom-diff-dom-generate-test/)
+
 **Process**
 
 1. Fixtures HTML -> HyperScript
